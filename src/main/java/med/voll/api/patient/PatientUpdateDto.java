@@ -8,6 +8,7 @@ public record PatientUpdateDto(
       @NotNull Long id,
       String name,
       String dni,
-      @Valid AddressDto address
+      @Valid AddressDto address,
+      String password
 ) {
 }

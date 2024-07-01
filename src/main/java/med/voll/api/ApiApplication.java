@@ -3,6 +3,7 @@ package med.voll.api;
 import med.voll.api.controllers.PatientController;
 import med.voll.api.controllers.PhysicianController;
 import med.voll.api.patient.PatientRepository;
+import med.voll.api.patient.PatientService;
 import med.voll.api.physician.PhysicianRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,7 +24,8 @@ public class ApiApplication {
 	}
 
 	@Bean
-	public PatientController patientController(PatientRepository patientRepository) {
-		return new PatientController(patientRepository);
+	public PatientController patientController(PatientRepository patientRepository, PatientService patientService) {
+		return new PatientController(patientRepository, patientService);
 	}
+
 }

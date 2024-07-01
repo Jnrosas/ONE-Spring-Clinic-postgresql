@@ -21,10 +21,13 @@ public class PatientController {
    //en lugar de usar @Autowired q imposibilita los unitary tests, creamos un constructor
    //que recibe el repositorio por param desde ApiApplication
    private PatientRepository patientRepository;
+   private PatientService patientService;
 
-   public PatientController(PatientRepository patientRepository) {
+   public PatientController(PatientRepository patientRepository, PatientService patientService) {
       this.patientRepository = patientRepository;
+      this.patientService = patientService;
    }
+
 
    @PostMapping
    @Transactional
@@ -32,6 +35,10 @@ public class PatientController {
    public ResponseEntity registerPatient(@RequestBody @Valid PatientRegisterDto patientRegisterDTO,
                                          UriComponentsBuilder uri) {
       PatientEntity patient = patientRepository.save(new PatientEntity(patientRegisterDTO));
+
+      //this encrypts the patient's password
+      patientService.encryptPassword(patient);
+
       PatientDisplayDto displayDto = new PatientDisplayDto(patient.getId(), patient.getName(),
             patient.getDni(), patient.getPhone_number());
       URI url = uri.path("/patients/{id}").buildAndExpand(patient.getId()).toUri();

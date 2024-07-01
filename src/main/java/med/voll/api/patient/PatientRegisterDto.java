@@ -11,6 +11,7 @@ public record PatientRegisterDto(
       @NotBlank String email,
       @NotBlank @Pattern(regexp = "\\d{7,8}") String dni,
       @NotBlank @Pattern(regexp = "\\d{9,11}") String phone_number,
-      @NotNull @Valid AddressDto address
+      @NotNull @Valid AddressDto address,
+      @NotBlank @Pattern(regexp = "\\w{6,}") String password
 ) {
 }
