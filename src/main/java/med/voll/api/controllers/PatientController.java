@@ -1,6 +1,7 @@
 package med.voll.api.controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import med.voll.api.patient.*;
@@ -17,6 +18,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/patients")
+@SecurityRequirement(name = "bearer-key")
 public class PatientController {
    //en lugar de usar @Autowired q imposibilita los unitary tests, creamos un constructor
    //que recibe el repositorio por param desde ApiApplication
@@ -61,12 +63,14 @@ public class PatientController {
    @Operation(summary = "Update patient", description = "Updates patient chosen by its Id")
    public ResponseEntity<PatientDisplayDto> updatePatient(@RequestBody @Valid PatientUpdateDto update,
                              @PathVariable Long id) {
-//      PatientEntity patient = patientRepository.getReferenceById(update.id());
-//      patient.updateData(update);
       Optional<PatientEntity> patient = patientRepository.findById(id);
       if (patient.isPresent()) {
          PatientEntity patientEnt = patient.get();
          patientEnt.updateData(update);
+
+         //this encrypts the patient's password
+         patientService.encryptPassword(patientEnt);
+
          return ResponseEntity.ok(new PatientDisplayDto(patientEnt));
       }
       return null;

@@ -1,4 +1,4 @@
-package med.voll.api.infra;
+package med.voll.api.infra.security;
 
 import med.voll.api.patient.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;

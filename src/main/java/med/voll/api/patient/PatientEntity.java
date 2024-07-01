@@ -48,6 +48,12 @@ public class PatientEntity {
       if (update.password() != null) {
          this.password = update.password();
       }
+      if (update.email() != null) {
+         this.email = update.email();
+      }
+      if (update.phone_number() != null) {
+         this.phone_number = update.phone_number();
+      }
    }
 
    public void deactivatePatient() {
