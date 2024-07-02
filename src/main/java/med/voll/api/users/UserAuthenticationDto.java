@@ -1,4 +1,4 @@
-package med.voll.api.user;
+package med.voll.api.users;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

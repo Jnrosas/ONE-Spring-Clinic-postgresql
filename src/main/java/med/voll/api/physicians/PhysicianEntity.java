@@ -1,4 +1,4 @@
-package med.voll.api.physician;
+package med.voll.api.physicians;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

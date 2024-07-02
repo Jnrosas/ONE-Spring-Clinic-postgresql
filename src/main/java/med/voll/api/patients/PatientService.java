@@ -1,4 +1,4 @@
-package med.voll.api.patient;
+package med.voll.api.patients;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;

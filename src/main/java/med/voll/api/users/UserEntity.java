@@ -1,10 +1,7 @@
-package med.voll.api.user;
+package med.voll.api.users;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,6 +12,7 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -24,6 +22,11 @@ public class UserEntity implements UserDetails {
    private Long id;
    private String email;
    private String password;
+
+   public UserEntity(String email, String password) {
+      this.email = email;
+      this.password = password;
+   }
 
    @Override
    public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -58,5 +61,14 @@ public class UserEntity implements UserDetails {
    @Override
    public boolean isEnabled() {
       return true;
+   }
+
+   public void updateData(String email, String password) {
+      if (email != null) {
+         this.email = email;
+      }
+      if (password != null) {
+         this.password = password;
+      }
    }
 }

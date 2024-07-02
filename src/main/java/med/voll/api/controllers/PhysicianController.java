@@ -3,7 +3,7 @@ package med.voll.api.controllers;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import med.voll.api.physician.*;
+import med.voll.api.physicians.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;

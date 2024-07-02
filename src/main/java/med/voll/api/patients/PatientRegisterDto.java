@@ -1,4 +1,4 @@
-package med.voll.api.patient;
+package med.voll.api.patients;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;

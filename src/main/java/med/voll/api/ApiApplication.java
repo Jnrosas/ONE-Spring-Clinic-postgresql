@@ -2,9 +2,12 @@ package med.voll.api;
 
 import med.voll.api.controllers.PatientController;
 import med.voll.api.controllers.PhysicianController;
-import med.voll.api.patient.PatientRepository;
-import med.voll.api.patient.PatientService;
-import med.voll.api.physician.PhysicianRepository;
+import med.voll.api.patients.PatientRepository;
+import med.voll.api.patients.PatientService;
+import med.voll.api.physicians.PhysicianRepository;
+import med.voll.api.users.UserAuthenticationDto;
+import med.voll.api.users.UserRepository;
+import med.voll.api.users.UserService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -24,8 +27,12 @@ public class ApiApplication {
 	}
 
 	@Bean
-	public PatientController patientController(PatientRepository patientRepository, PatientService patientService) {
-		return new PatientController(patientRepository, patientService);
+	public PatientController patientController(PatientRepository patientRepository,
+															 PatientService patientService,
+															 UserRepository userRepository,
+															 UserService userService) {
+		return new PatientController(
+				patientRepository, patientService, userRepository, userService);
 	}
 
 }
