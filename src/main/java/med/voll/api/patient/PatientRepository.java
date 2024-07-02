@@ -11,5 +11,4 @@ public interface PatientRepository extends JpaRepository<PatientEntity, Long> {
 
    Page<PatientEntity> findByActiveTrue(Pageable pagination);
 
-   UserDetails findByEmail(String username);
 }

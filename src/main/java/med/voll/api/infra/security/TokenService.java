@@ -5,7 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import med.voll.api.patient.PatientEntity;
+import med.voll.api.user.UserEntity;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +19,13 @@ public class TokenService {
    @Value("${api.security.secret}")
    private String apiSecret;
 
-   public String generateToken(PatientEntity patient) {
+   public String generateToken(UserEntity user) {
       try {
          Algorithm algorithm = Algorithm.HMAC256(apiSecret);
          return JWT.create()
                .withIssuer("vollmed_postgres")
-               .withSubject(patient.getEmail()) //this is the username
-               .withClaim("id", patient.getId())
+               .withSubject(user.getEmail()) //this is the username
+               .withClaim("id", user.getId())
                .withExpiresAt(expiryDate()) //token expiry duration
                .sign(algorithm); //this is the token
       }

@@ -4,8 +4,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import med.voll.api.infra.security.JWTokenDto;
 import med.voll.api.infra.security.TokenService;
-import med.voll.api.patient.PatientAuthenticationDto;
-import med.voll.api.patient.PatientEntity;
+import med.voll.api.user.UserAuthenticationDto;
+import med.voll.api.user.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,16 +26,16 @@ public class AuthenticationController {
 
    @PostMapping
    @Operation(summary = "Login", description = "Login using the patient's email and password")
-   public ResponseEntity userAuthentication(
-         @RequestBody @Valid PatientAuthenticationDto patientAuthenticationDto) {
+   public ResponseEntity<JWTokenDto> userAuthentication(
+         @RequestBody @Valid UserAuthenticationDto userAuthenticationDto) {
 
       Authentication authToken = new UsernamePasswordAuthenticationToken(
-            patientAuthenticationDto.email(), patientAuthenticationDto.password());
+            userAuthenticationDto.email(), userAuthenticationDto.password());
 
-      var authenticatedPatient = authenticationManager.authenticate(authToken);
+      var authenticatedUser = authenticationManager.authenticate(authToken);
 
       var JWToken = tokenService
-            .generateToken((PatientEntity) authenticatedPatient.getPrincipal());
+            .generateToken((UserEntity) authenticatedUser.getPrincipal());
       return ResponseEntity.ok(new JWTokenDto(JWToken));
    }
 }

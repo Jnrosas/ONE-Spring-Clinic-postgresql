@@ -1,10 +1,10 @@
-package med.voll.api.patient;
+package med.voll.api.user;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
-public record PatientAuthenticationDto(
+public record UserAuthenticationDto(
       @NotBlank
       @Email
       String email,

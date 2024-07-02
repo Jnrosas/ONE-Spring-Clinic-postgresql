@@ -4,7 +4,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import med.voll.api.patient.PatientRepository;
+import med.voll.api.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,7 +18,7 @@ public class SecurityFilter extends OncePerRequestFilter {
    @Autowired
    private TokenService tokenService;
    @Autowired
-   private PatientRepository patientRepository;
+   private UserRepository userRepository;
 
    @Override
    protected void doFilterInternal(HttpServletRequest request,
@@ -32,7 +32,7 @@ public class SecurityFilter extends OncePerRequestFilter {
          var username = tokenService.getSubject(token);
 
          if (username != null) {
-            var user = patientRepository.findByEmail(username);
+            var user = userRepository.findByEmail(username);
             var authentication = new UsernamePasswordAuthenticationToken(user, null,
                   user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
