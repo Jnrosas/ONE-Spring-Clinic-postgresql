@@ -1,11 +1,13 @@
 package med.voll.api;
 
+import med.voll.api.appointments.AppointmentService;
+import med.voll.api.appointments.AppointmentsRepository;
+import med.voll.api.controllers.AppointmentController;
 import med.voll.api.controllers.PatientController;
 import med.voll.api.controllers.PhysicianController;
 import med.voll.api.patients.PatientRepository;
 import med.voll.api.patients.PatientService;
 import med.voll.api.physicians.PhysicianRepository;
-import med.voll.api.users.UserAuthenticationDto;
 import med.voll.api.users.UserRepository;
 import med.voll.api.users.UserService;
 import org.springframework.boot.SpringApplication;
@@ -31,8 +33,14 @@ public class ApiApplication {
 															 PatientService patientService,
 															 UserRepository userRepository,
 															 UserService userService) {
-		return new PatientController(
-				patientRepository, patientService, userRepository, userService);
+		return new PatientController(patientRepository, patientService, userRepository,
+				userService);
 	}
 
+	@Bean
+	public AppointmentService appointmentService(AppointmentsRepository repository,
+																PatientRepository patientRepository,
+																PhysicianRepository physicianRepository) {
+		return new AppointmentService(repository, patientRepository, physicianRepository);
+	}
 }
