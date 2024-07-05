@@ -40,6 +40,12 @@ public class AppointmentService {
    }
 
    private PhysicianEntity selectPhysician(AppointmentDto data) {
-      return null;
+      if (data.idPhysician() != null) {
+         return physicianRepository.getReferenceById(data.idPhysician());
+      }
+      if (data.specialty() == null) {
+         throw new IntegrityValidation("You need to select a physician's specialty");
+      }
+      return physicianRepository.selectPhysicianSpecialtyAndDate(data.specialty(), data.date());
    }
 }
