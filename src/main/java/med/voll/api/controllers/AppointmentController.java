@@ -25,6 +25,7 @@ public class AppointmentController {
    public ResponseEntity registerAppointment(@RequestBody @Valid AppointmentDto data) {
 
       appointmentService.registerAppointment(data);
+
       return ResponseEntity.ok(new AppointmentDisplayDto(
             null, data.idPatient(), data.idPhysician(), data.date()));
    }

@@ -1,6 +1,9 @@
 package med.voll.api.appointments;
 
+import jakarta.xml.bind.ValidationException;
+import med.voll.api.infra.errors.IntegrityValidation;
 import med.voll.api.patients.PatientRepository;
+import med.voll.api.physicians.PhysicianEntity;
 import med.voll.api.physicians.PhysicianRepository;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +22,24 @@ public class AppointmentService {
    }
 
    public void registerAppointment(AppointmentDto data) {
+      if (patientRepository.findById(data.idPatient()).isEmpty()) {
+         throw new IntegrityValidation("Patient's ID not found");
+      }
+      if (data.idPhysician() != null && !physicianRepository.existsById(data.idPhysician())) {
+         throw new IntegrityValidation("Physician's ID not found");
+      }
+
       var patient = patientRepository.findById(data.idPatient()).get();
-      var physician = physicianRepository.findById(data.idPhysician()).get();
+
+      var physician = selectPhysician(data);
 
       var appointment = new AppointmentEntity(null, patient,
             physician, data.date());
+
       repository.save(appointment);
+   }
+
+   private PhysicianEntity selectPhysician(AppointmentDto data) {
+      return null;
    }
 }
