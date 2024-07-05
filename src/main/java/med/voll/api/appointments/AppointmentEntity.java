@@ -26,7 +26,7 @@ public class AppointmentEntity {
 
    @ManyToOne(fetch = FetchType.LAZY)
    @JoinColumn(name = "id_physician")
-   private PhysicianEntity Physician;
+   private PhysicianEntity physician;
 
    private LocalDateTime date;
 

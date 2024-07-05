@@ -1,8 +1,6 @@
 package med.voll.api.appointments;
 
-import med.voll.api.patients.PatientEntity;
 import med.voll.api.patients.PatientRepository;
-import med.voll.api.physicians.PhysicianEntity;
 import med.voll.api.physicians.PhysicianRepository;
 import org.springframework.stereotype.Service;
 
