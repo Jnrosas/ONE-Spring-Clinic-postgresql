@@ -3,15 +3,17 @@ package med.voll.api.appointments.validations;
 import jakarta.xml.bind.ValidationException;
 import med.voll.api.appointments.AppointmentDto;
 import med.voll.api.appointments.AppointmentsRepository;
+import org.springframework.stereotype.Component;
 
-public class OneAppointmentADay {
+@Component
+public class OneAppointmentADay implements AppointmentValidator {
    private AppointmentsRepository appointmentsRepository;
 
    public OneAppointmentADay(AppointmentsRepository appointmentsRepository) {
       this.appointmentsRepository = appointmentsRepository;
    }
 
-   public void valida(AppointmentDto data) throws ValidationException {
+   public void validate(AppointmentDto data) throws ValidationException {
       var start = data.date().withHour(7);
       var end = data.date().withHour(18);
       var patientWithAppointment = appointmentsRepository

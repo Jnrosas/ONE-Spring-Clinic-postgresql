@@ -3,8 +3,10 @@ package med.voll.api.appointments.validations;
 import jakarta.xml.bind.ValidationException;
 import med.voll.api.appointments.AppointmentDto;
 import med.voll.api.appointments.AppointmentsRepository;
+import org.springframework.stereotype.Component;
 
-public class BusyPhysician {
+@Component
+public class BusyPhysician implements AppointmentValidator {
    private AppointmentsRepository appointmentsRepository;
 
    public BusyPhysician(AppointmentsRepository appointmentsRepository) {

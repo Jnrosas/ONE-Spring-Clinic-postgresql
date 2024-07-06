@@ -2,10 +2,13 @@ package med.voll.api.appointments.validations;
 
 import jakarta.xml.bind.ValidationException;
 import med.voll.api.appointments.AppointmentDto;
+import org.springframework.stereotype.Component;
 
 import java.time.DayOfWeek;
 
-public class WorkingHours {
+@Component
+public class WorkingHours implements AppointmentValidator {
+
    public void validate(AppointmentDto data) throws ValidationException {
       var sunday = DayOfWeek.SUNDAY.equals(data.date().getDayOfWeek());
       var beforeOpening = data.date().getHour() < 7;

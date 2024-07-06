@@ -2,11 +2,14 @@ package med.voll.api.appointments.validations;
 
 import jakarta.xml.bind.ValidationException;
 import med.voll.api.appointments.AppointmentDto;
+import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-public class TimeInAdvance {
+@Component
+public class TimeInAdvance implements AppointmentValidator {
+
    public void validate(AppointmentDto data) throws ValidationException {
       var now = LocalDateTime.now();
       var appointmentTime = data.date();
