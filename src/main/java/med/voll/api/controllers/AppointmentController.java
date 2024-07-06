@@ -27,6 +27,6 @@ public class AppointmentController {
       appointmentService.registerAppointment(data);
 
       return ResponseEntity.ok(new AppointmentDisplayDto(
-            null, data.idPatient(), data.idPhysician(), data.date()));
+            null, data.idPatient(), data.idPhysician(), data.date(), data.specialty()));
    }
 }
