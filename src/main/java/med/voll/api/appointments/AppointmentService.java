@@ -1,22 +1,30 @@
 package med.voll.api.appointments;
 
+import jakarta.xml.bind.ValidationException;
+import med.voll.api.appointments.validations.AppointmentValidator;
 import med.voll.api.infra.errors.IntegrityValidation;
 import med.voll.api.patients.PatientRepository;
 import med.voll.api.physicians.PhysicianEntity;
+import med.voll.api.physicians.PhysicianRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class AppointmentService {
    private AppointmentsRepository repository;
    private PatientRepository patientRepository;
-   private med.voll.api.physicians.PhysicianRepository physicianRepository;
+   private PhysicianRepository physicianRepository;
+   private List<AppointmentValidator> validators;
 
    public AppointmentService(AppointmentsRepository repository,
                              PatientRepository patientRepository,
-                             med.voll.api.physicians.PhysicianRepository physicianRepository) {
+                             PhysicianRepository physicianRepository,
+                             List<AppointmentValidator> validators) {
       this.repository = repository;
       this.patientRepository = patientRepository;
       this.physicianRepository = physicianRepository;
+      this.validators = validators;
    }
 
    public void registerAppointment(AppointmentDto data) {
@@ -27,6 +35,13 @@ public class AppointmentService {
          throw new IntegrityValidation("Physician's ID not found");
       }
       // Validaciones
+      validators.forEach(v -> {
+         try {
+            v.validate(data);
+         } catch (ValidationException e) {
+            throw new RuntimeException(e);
+         }
+      });
 
       var patient = patientRepository.findById(data.idPatient()).get();
 
