@@ -21,8 +21,14 @@ public interface PhysicianRepository extends JpaRepository<PhysicianEntity, Long
             select a.physician.id from AppointmentEntity a
             where a.date = :date
             )
-         order by rand()
+         order by random()
          limit 1
          """)
    PhysicianEntity selectPhysicianSpecialtyAndDate(SpecialtyEnum specialty, LocalDateTime date);
+
+   @Query("""
+         select p.active from PhysicianEntity p
+         where p.id = :idPhysician
+         """)
+   Boolean findActiveById(Long idPhysician);
 }

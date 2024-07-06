@@ -9,7 +9,6 @@ import med.voll.api.users.UserAuthenticationDto;
 import med.voll.api.users.UserEntity;
 import med.voll.api.users.UserRepository;
 import med.voll.api.users.UserService;
-import org.apache.catalina.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
