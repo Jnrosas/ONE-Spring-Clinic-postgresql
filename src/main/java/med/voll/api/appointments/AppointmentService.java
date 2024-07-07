@@ -6,7 +6,10 @@ import med.voll.api.infra.errors.IntegrityValidation;
 import med.voll.api.patients.PatientRepository;
 import med.voll.api.physicians.PhysicianEntity;
 import med.voll.api.physicians.PhysicianRepository;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -65,7 +68,8 @@ public class AppointmentService {
       if (data.specialty() == null) {
          throw new IntegrityValidation("You need to select a physician's specialty");
       }
-      return physicianRepository.selectPhysicianSpecialtyAndDate(data.specialty(), data.date());
+      return physicianRepository.selectPhysicianSpecialtyAndDate(
+            data.specialty(), data.date());
    }
 
 }

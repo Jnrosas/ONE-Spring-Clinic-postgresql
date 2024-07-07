@@ -3,10 +3,9 @@ package med.voll.api.controllers;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import med.voll.api.appointments.AppointmentDisplayDto;
-import med.voll.api.appointments.AppointmentDto;
-import med.voll.api.appointments.AppointmentService;
-import med.voll.api.appointments.AppointmentsRepository;
+import jakarta.xml.bind.ValidationException;
+import med.voll.api.appointments.*;
+import med.voll.api.patients.PatientEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -45,6 +44,18 @@ public class AppointmentController {
 
       return ResponseEntity.ok(appointmentsRepository.findAll(pagination)
             .map(AppointmentDisplayDto::new));
+   }
+
+   @DeleteMapping("/{id}")
+   @Transactional
+   @Operation(summary = "Delete appointment",
+         description = "Delete or cancel an appointment by its ID")
+   public ResponseEntity cancelAppointment(@PathVariable Long id) throws ValidationException {
+      if (!appointmentsRepository.existsById(id)) {
+         throw new ValidationException("No such appointment found");
+      }
+      appointmentsRepository.deleteById(id);
+      return ResponseEntity.noContent().build();
    }
 
 }
