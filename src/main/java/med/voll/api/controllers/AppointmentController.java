@@ -24,9 +24,8 @@ public class AppointmentController {
          description = "A patient can add an appointment with a physician")
    public ResponseEntity registerAppointment(@RequestBody @Valid AppointmentDto data) {
 
-      appointmentService.registerAppointment(data);
+      var response = appointmentService.registerAppointment(data);
 
-      return ResponseEntity.ok(new AppointmentDisplayDto(
-            null, data.idPatient(), data.idPhysician(), data.date(), data.specialty()));
+      return ResponseEntity.ok(response);
    }
 }

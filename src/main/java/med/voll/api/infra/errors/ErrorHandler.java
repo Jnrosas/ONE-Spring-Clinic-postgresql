@@ -27,12 +27,12 @@ public class ErrorHandler {
    }
 
    @ExceptionHandler(IntegrityValidation.class)
-   public ResponseEntity handleErrorBusinessValidations(Exception e) {
+   public ResponseEntity handleErrorIntegrityValidations(Exception e) {
       return ResponseEntity.badRequest().body(e.getMessage());
    }
 
    @ExceptionHandler(ValidationException.class)
-   public ResponseEntity handleErrorBusinessValidationsHours(Exception e) {
+   public ResponseEntity handleErrorBusinessValidations(Exception e) {
       return ResponseEntity.badRequest().body(e.getMessage());
    }
 

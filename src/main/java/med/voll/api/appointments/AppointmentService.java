@@ -27,7 +27,7 @@ public class AppointmentService {
       this.validators = validators;
    }
 
-   public void registerAppointment(AppointmentDto data) {
+   public AppointmentDisplayDto registerAppointment(AppointmentDto data) {
       if (patientRepository.findById(data.idPatient()).isEmpty()) {
          throw new IntegrityValidation("Patient's ID not found");
       }
@@ -46,11 +46,16 @@ public class AppointmentService {
       var patient = patientRepository.findById(data.idPatient()).get();
 
       var physician = selectPhysician(data);
+      if (physician == null) {
+         throw new IntegrityValidation("No available physician for this specialty");
+      }
 
       var appointment = new AppointmentEntity(null, patient,
             physician, data.date());
 
       repository.save(appointment);
+
+      return new AppointmentDisplayDto(appointment);
    }
 
    private PhysicianEntity selectPhysician(AppointmentDto data) {

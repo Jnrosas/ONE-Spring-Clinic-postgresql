@@ -12,4 +12,9 @@ public record AppointmentDisplayDto(
       @JsonFormat(pattern = "dd-MM-yyyy HH:mm") LocalDateTime dateTime,
       SpecialtyEnum specialty
 ) {
+   public AppointmentDisplayDto(AppointmentEntity appointment) {
+      this(appointment.getId(), appointment.getPatient().getId(),
+            appointment.getPhysician().getId(), appointment.getDate(),
+            appointment.getPhysician().getSpecialty());
+   }
 }
