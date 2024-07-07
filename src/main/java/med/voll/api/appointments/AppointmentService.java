@@ -6,6 +6,7 @@ import med.voll.api.infra.errors.IntegrityValidation;
 import med.voll.api.patients.PatientRepository;
 import med.voll.api.physicians.PhysicianEntity;
 import med.voll.api.physicians.PhysicianRepository;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -49,7 +50,6 @@ public class AppointmentService {
       if (physician == null) {
          throw new IntegrityValidation("No available physician for this specialty");
       }
-
       var appointment = new AppointmentEntity(null, patient,
             physician, data.date());
 
@@ -67,4 +67,5 @@ public class AppointmentService {
       }
       return physicianRepository.selectPhysicianSpecialtyAndDate(data.specialty(), data.date());
    }
+
 }

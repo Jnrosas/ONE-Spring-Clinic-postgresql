@@ -6,6 +6,10 @@ import jakarta.validation.Valid;
 import med.voll.api.appointments.AppointmentDisplayDto;
 import med.voll.api.appointments.AppointmentDto;
 import med.voll.api.appointments.AppointmentService;
+import med.voll.api.appointments.AppointmentsRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,9 +17,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/appointments")
 public class AppointmentController {
    private AppointmentService appointmentService;
+   private AppointmentsRepository appointmentsRepository;
 
-   public AppointmentController(AppointmentService appointmentService) {
+   public AppointmentController(AppointmentService appointmentService,
+                                AppointmentsRepository appointmentsRepository) {
       this.appointmentService = appointmentService;
+      this.appointmentsRepository = appointmentsRepository;
    }
 
    @PostMapping
@@ -28,4 +35,16 @@ public class AppointmentController {
 
       return ResponseEntity.ok(response);
    }
+
+
+   @GetMapping
+   @Operation(summary = "Get appointments",
+         description = "Get the list of appointments")
+   public ResponseEntity<Page<AppointmentDisplayDto>> listAppointments(
+         @PageableDefault(size = 3, sort = "date") Pageable pagination) {
+
+      return ResponseEntity.ok(appointmentsRepository.findAll(pagination)
+            .map(AppointmentDisplayDto::new));
+   }
+
 }
