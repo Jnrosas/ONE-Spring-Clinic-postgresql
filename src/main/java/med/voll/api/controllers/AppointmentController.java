@@ -45,8 +45,8 @@ public class AppointmentController {
 //      return ResponseEntity.ok(appointmentsRepository.findAll(pagination)
 //            .map(AppointmentDisplayDto::new)); //shows all
 
-      return ResponseEntity.ok(appointmentsRepository.findByActiveTrue(pagination)
-            .map(AppointmentDisplayDto::new)); //shows only active
+      var response = appointmentService.listAppointments(pagination);
+      return ResponseEntity.ok(response); //shows only active
    }
 
    @DeleteMapping("/{id}")

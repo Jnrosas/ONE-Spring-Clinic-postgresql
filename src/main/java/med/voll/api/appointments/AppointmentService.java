@@ -6,6 +6,8 @@ import med.voll.api.infra.errors.IntegrityValidation;
 import med.voll.api.patients.PatientRepository;
 import med.voll.api.physicians.PhysicianEntity;
 import med.voll.api.physicians.PhysicianRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -58,6 +60,7 @@ public class AppointmentService {
       return new AppointmentDisplayDto(appointment);
    }
 
+
    private PhysicianEntity selectPhysician(AppointmentDto data) {
       if (data.idPhysician() != null) {
          return physicianRepository.getReferenceById(data.idPhysician());
@@ -69,4 +72,8 @@ public class AppointmentService {
             data.specialty(), data.date());
    }
 
+
+   public Page<AppointmentDisplayDto> listAppointments(Pageable pagination) {
+      return repository.findByActiveTrue(pagination).map(AppointmentDisplayDto::new);
+   }
 }
