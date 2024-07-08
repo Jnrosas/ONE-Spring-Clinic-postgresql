@@ -36,7 +36,8 @@ public class AppointmentEntity {
    private CancelReason cancelReason;
 
 
-   public void deactivateAppointment() {
+   public void deactivateAppointment(AppointmentCancelDto data) {
       this.active = false;
+      this.cancelReason = data.cancelReason();
    }
 }

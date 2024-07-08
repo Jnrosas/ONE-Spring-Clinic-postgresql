@@ -92,8 +92,8 @@ public class AppointmentService {
             throw new RuntimeException(e);
          }
       });
-
       AppointmentEntity appointment = repository.getReferenceById(data.id());
-      appointment.deactivateAppointment();
+      appointment.deactivateAppointment(data);
+      repository.save(appointment);
    }
 }
