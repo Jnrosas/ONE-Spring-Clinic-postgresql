@@ -17,9 +17,9 @@ public class SpringDocConfig { //in order to use the token in swagger
                         new SecurityScheme().type(SecurityScheme.Type.HTTP)
                               .scheme("bearer").bearerFormat("JWT")))
             .info(new Info()
-                  .title("API Vollmed_postgres")
-                  .description("API Rest de la aplicación vollmed clinic, que contiene" +
-                        " las funcionalidades de CRUD de medicos y pacientes"));
+                  .title("Clinic API using postgres DB")
+                  .description("API Rest for a Clinic that consists of" +
+                        " CRUD functionalities for physicians, patients and appointments"));
    }
 
    @Bean
