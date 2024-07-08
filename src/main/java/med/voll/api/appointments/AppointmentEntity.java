@@ -29,7 +29,7 @@ public class AppointmentEntity {
    private PhysicianEntity physician;
 
    private LocalDateTime date;
-   private Boolean active = true;
+   private Boolean active;
 
    @Enumerated(EnumType.STRING)
    @Column(name = "cancel_reason")

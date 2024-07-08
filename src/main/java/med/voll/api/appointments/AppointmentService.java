@@ -55,7 +55,7 @@ public class AppointmentService {
          throw new IntegrityValidation("No available physician for this specialty");
       }
       var appointment = new AppointmentEntity(null, patient,
-            physician, data.date(), null, null);
+            physician, data.date(), true, null);
 
       repository.save(appointment);
 
