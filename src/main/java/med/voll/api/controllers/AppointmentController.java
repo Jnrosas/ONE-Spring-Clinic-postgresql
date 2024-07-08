@@ -42,8 +42,11 @@ public class AppointmentController {
    public ResponseEntity<Page<AppointmentDisplayDto>> listAppointments(
          @PageableDefault(size = 3, sort = "date") Pageable pagination) {
 
-      return ResponseEntity.ok(appointmentsRepository.findAll(pagination)
-            .map(AppointmentDisplayDto::new));
+//      return ResponseEntity.ok(appointmentsRepository.findAll(pagination)
+//            .map(AppointmentDisplayDto::new)); //shows all
+
+      return ResponseEntity.ok(appointmentsRepository.findByActiveTrue(pagination)
+            .map(AppointmentDisplayDto::new)); //shows only active
    }
 
    @DeleteMapping("/{id}")
@@ -54,8 +57,12 @@ public class AppointmentController {
       if (!appointmentsRepository.existsById(id)) {
          throw new ValidationException("No such appointment found");
       }
-      appointmentsRepository.deleteById(id);
-      return ResponseEntity.noContent().build();
+//      appointmentsRepository.deleteById(id);
+//      return ResponseEntity.noContent().build(); //deletes from DB
+
+      AppointmentEntity appointment = appointmentsRepository.getReferenceById(id);
+      appointment.deactivateAppointment();
+      return ResponseEntity.noContent().build(); // changes active to false
    }
 
 }

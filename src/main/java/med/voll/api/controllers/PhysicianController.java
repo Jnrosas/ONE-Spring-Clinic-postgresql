@@ -73,7 +73,9 @@ public class PhysicianController {
          description = "Logically delete: become inactive a physician chose by its Id")
    public ResponseEntity deletePhysician(@PathVariable Long id) {
       PhysicianEntity physician = physicianRepository.getReferenceById(id);
+
 //      physicianRepository.delete(physician); //we won't delete it from the ddbb, we'll do logical deletion
+
       physician.deactivatePhyisician();
       return ResponseEntity.noContent().build();
    }

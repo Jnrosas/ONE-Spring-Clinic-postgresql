@@ -29,5 +29,9 @@ public class AppointmentEntity {
    private PhysicianEntity physician;
 
    private LocalDateTime date;
+   private Boolean active = true;
 
+   public void deactivateAppointment() {
+      this.active = false;
+   }
 }
