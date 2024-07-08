@@ -76,4 +76,13 @@ public class AppointmentService {
    public Page<AppointmentDisplayDto> listAppointments(Pageable pagination) {
       return repository.findByActiveTrue(pagination).map(AppointmentDisplayDto::new);
    }
+
+
+   public void deactivateAppointment(Long id) throws ValidationException {
+      if (!repository.existsById(id)) {
+         throw new ValidationException("No such appointment found");
+      }
+      AppointmentEntity appointment = repository.getReferenceById(id);
+      appointment.deactivateAppointment();
+   }
 }

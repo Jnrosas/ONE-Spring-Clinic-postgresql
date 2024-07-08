@@ -42,9 +42,6 @@ public class AppointmentController {
    public ResponseEntity<Page<AppointmentDisplayDto>> listAppointments(
          @PageableDefault(size = 3, sort = "date") Pageable pagination) {
 
-//      return ResponseEntity.ok(appointmentsRepository.findAll(pagination)
-//            .map(AppointmentDisplayDto::new)); //shows all
-
       var response = appointmentService.listAppointments(pagination);
       return ResponseEntity.ok(response); //shows only active
    }
@@ -54,15 +51,9 @@ public class AppointmentController {
    @Operation(summary = "Delete appointment",
          description = "Delete or cancel an appointment by its ID")
    public ResponseEntity cancelAppointment(@PathVariable Long id) throws ValidationException {
-      if (!appointmentsRepository.existsById(id)) {
-         throw new ValidationException("No such appointment found");
-      }
-//      appointmentsRepository.deleteById(id);
-//      return ResponseEntity.noContent().build(); //deletes from DB
 
-      AppointmentEntity appointment = appointmentsRepository.getReferenceById(id);
-      appointment.deactivateAppointment();
-      return ResponseEntity.noContent().build(); // changes active to false
+      appointmentService.deactivateAppointment(id);
+      return ResponseEntity.noContent().build();
    }
 
 }
