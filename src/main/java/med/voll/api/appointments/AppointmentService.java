@@ -1,6 +1,7 @@
 package med.voll.api.appointments;
 
 import jakarta.xml.bind.ValidationException;
+import med.voll.api.appointments.validations.AppointmentCancelValidator;
 import med.voll.api.appointments.validations.AppointmentValidator;
 import med.voll.api.infra.errors.IntegrityValidation;
 import med.voll.api.patients.PatientRepository;
@@ -18,15 +19,18 @@ public class AppointmentService {
    private PatientRepository patientRepository;
    private PhysicianRepository physicianRepository;
    private List<AppointmentValidator> validators;
+   private List<AppointmentCancelValidator> cancelValidators;
 
    public AppointmentService(AppointmentsRepository repository,
                              PatientRepository patientRepository,
                              PhysicianRepository physicianRepository,
-                             List<AppointmentValidator> validators) {
+                             List<AppointmentValidator> validators,
+                             List<AppointmentCancelValidator> cancelValidators) {
       this.repository = repository;
       this.patientRepository = patientRepository;
       this.physicianRepository = physicianRepository;
       this.validators = validators;
+      this.cancelValidators = cancelValidators;
    }
 
 
@@ -37,7 +41,7 @@ public class AppointmentService {
       if (data.idPhysician() != null && !physicianRepository.existsById(data.idPhysician())) {
          throw new IntegrityValidation("Physician's ID not found");
       }
-      // Validaciones
+      // Validations
       validators.forEach(v -> {
          try {
             v.validate(data);
@@ -45,15 +49,13 @@ public class AppointmentService {
             throw new RuntimeException(e);
          }
       });
-
       var patient = patientRepository.findById(data.idPatient()).get();
-
       var physician = selectPhysician(data);
       if (physician == null) {
          throw new IntegrityValidation("No available physician for this specialty");
       }
       var appointment = new AppointmentEntity(null, patient,
-            physician, data.date(), null);
+            physician, data.date(), null, null);
 
       repository.save(appointment);
 
@@ -78,11 +80,20 @@ public class AppointmentService {
    }
 
 
-   public void deactivateAppointment(Long id) throws ValidationException {
-      if (!repository.existsById(id)) {
+   public void deactivateAppointment(AppointmentCancelDto data) throws ValidationException {
+      if (!repository.existsById(data.id())) {
          throw new ValidationException("No such appointment found");
       }
-      AppointmentEntity appointment = repository.getReferenceById(id);
+      //Validation
+      cancelValidators.forEach(v -> {
+         try {
+            v.validate(data);
+         } catch (ValidationException e) {
+            throw new RuntimeException(e);
+         }
+      });
+
+      AppointmentEntity appointment = repository.getReferenceById(data.id());
       appointment.deactivateAppointment();
    }
 }

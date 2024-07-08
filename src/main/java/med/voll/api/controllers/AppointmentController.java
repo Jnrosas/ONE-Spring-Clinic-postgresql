@@ -46,13 +46,14 @@ public class AppointmentController {
       return ResponseEntity.ok(response); //shows only active
    }
 
-   @DeleteMapping("/{id}")
+
+   @DeleteMapping
    @Transactional
    @Operation(summary = "Delete appointment",
          description = "Delete or cancel an appointment by its ID")
-   public ResponseEntity cancelAppointment(@PathVariable Long id) throws ValidationException {
+   public ResponseEntity cancelAppointment(@RequestBody @Valid AppointmentCancelDto data) throws ValidationException {
 
-      appointmentService.deactivateAppointment(id);
+      appointmentService.deactivateAppointment(data);
       return ResponseEntity.noContent().build();
    }
 

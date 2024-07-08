@@ -31,6 +31,11 @@ public class AppointmentEntity {
    private LocalDateTime date;
    private Boolean active = true;
 
+   @Enumerated(EnumType.STRING)
+   @Column(name = "cancel_reason")
+   private CancelReason cancelReason;
+
+
    public void deactivateAppointment() {
       this.active = false;
    }

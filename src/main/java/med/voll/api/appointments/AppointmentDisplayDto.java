@@ -10,11 +10,12 @@ public record AppointmentDisplayDto(
       Long idPatient,
       Long idPhysician,
       @JsonFormat(pattern = "dd-MM-yyyy HH:mm") LocalDateTime dateTime,
-      SpecialtyEnum specialty
+      SpecialtyEnum specialty,
+      CancelReason cancelReason
 ) {
    public AppointmentDisplayDto(AppointmentEntity appointment) {
       this(appointment.getId(), appointment.getPatient().getId(),
             appointment.getPhysician().getId(), appointment.getDate(),
-            appointment.getPhysician().getSpecialty());
+            appointment.getPhysician().getSpecialty(), appointment.getCancelReason());
    }
 }
