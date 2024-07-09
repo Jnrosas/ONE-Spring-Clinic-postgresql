@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/appointments")
 @SecurityRequirement(name = "bearer-key")
-@Tag(name = "b")
+@Tag(name = "2 Appointments")
 public class AppointmentController {
    private AppointmentService appointmentService;
    private AppointmentsRepository appointmentsRepository;

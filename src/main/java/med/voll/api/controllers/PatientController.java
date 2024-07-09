@@ -23,7 +23,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/patients")
 @SecurityRequirement(name = "bearer-key")
-@Tag(name = "c")
+@Tag(name = "3 Patients")
 public class PatientController {
    //en lugar de usar @Autowired q imposibilita los unitary tests, creamos un constructor
    //que recibe el repositorio por param desde ApiApplication

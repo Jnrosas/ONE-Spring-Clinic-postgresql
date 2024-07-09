@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/login")
-@Tag(name = "a") //sorts order in swagger plus the config in application.properties
+@Tag(name = "1 Authentication") //sorts order in swagger plus the config in application.properties
 public class AuthenticationController {
    @Autowired
    private AuthenticationManager authenticationManager;
