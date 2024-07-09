@@ -2,6 +2,7 @@ package med.voll.api.controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import med.voll.api.patients.*;
@@ -22,6 +23,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/patients")
 @SecurityRequirement(name = "bearer-key")
+@Tag(name = "c")
 public class PatientController {
    //en lugar de usar @Autowired q imposibilita los unitary tests, creamos un constructor
    //que recibe el repositorio por param desde ApiApplication

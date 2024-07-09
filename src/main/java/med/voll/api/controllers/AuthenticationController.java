@@ -1,6 +1,7 @@
 package med.voll.api.controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import med.voll.api.infra.security.JWTokenDto;
 import med.voll.api.infra.security.TokenService;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/login")
+@Tag(name = "a") //sorts order in swagger plus the config in application.properties
 public class AuthenticationController {
    @Autowired
    private AuthenticationManager authenticationManager;
