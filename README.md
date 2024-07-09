@@ -1,4 +1,4 @@
-# CLINIC API REST Stateless
+# CLINIC API REST Stateless Backend application
 
 ### Guide
 The following guides illustrate how to use some features concretely:
